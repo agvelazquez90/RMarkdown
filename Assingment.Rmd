@@ -1,0 +1,52 @@
+---
+title: "Assingment 1-Angel Velazquez"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(readr)
+activity <- read_csv("C:/Users/Angel/Downloads/activity.csv")
+```
+
+```{r, echo=TRUE, eval=TRUE}
+hist(activity$steps,main = "Histogram of total number of steps taken each day",xlab = "Range of Steps")
+mean(activity$steps)
+median(activity$steps)
+```
+
+The histogram have some missing values. After range from 550 to 700 all values are zero. Also the meadian and the mean values are NA values because they have missing values.
+
+```{r,echo=TRUE, eval=TRUE}
+df = na.omit(activity)
+freq = group_by(df, date) %>% summarise(mean = mean(steps))
+plot(freq[,1:2],type = 'l')
+summary(freq)
+```
+
+The max values was in 2012-11-23 with 73.6 steps average.
+
+```{r,echo=TRUE, eval=TRUE}
+summary(activity$steps)
+ave =cbind(activity$steps,activity$interval)
+ave = rowMeans(ave, na.rm=TRUE)
+df = na.omit(activity)
+freq = group_by(df, date) %>% summarise(mean = mean(steps))
+new_df = activity
+for(i in seq(length(new_df$steps))){
+  if(is.na(new_df$steps[i])){
+    new_df$steps[i] = ave[i]
+  }
+}
+
+hist(new_df$steps, main = "Histogram of total number of steps taken each day",xlab = "Range of Steps")
+mean(new_df$steps)
+median(new_df$steps)
+```
+
+In the activity dataframe exist 2304 missing values. To replace all values I used the cross mean interval values. The histogram now do not have the missing values, now is more constant. The results are very different that the first part of the assingment. Remove all missing values change the output.
+
+
+
+
