@@ -20,24 +20,11 @@ median(activity$steps, na.rm = TRUE)
 The histogram have some missing values. After range from 550 to 700 all values are zero. Also the meadian and the mean values are NA values because they have missing values.
 
 ``` r
-df = na.omit(activity)
-freq = group_by(df, date) %>% summarise(mean = mean(steps))
-plot(freq[,1:2],type = 'l')
+steps_mean <- aggregate(steps~interval, data=activity,FUN=mean)
+plot(steps_mean,type = 'l', main = "Steps per intelvals")
 ```
 
 ![](PA1_template_files/figure-markdown_github/unnamed-chunk-2-1.png)
-
-``` r
-summary(freq)
-```
-
-    ##       date                 mean        
-    ##  Min.   :2012-10-02   Min.   : 0.1424  
-    ##  1st Qu.:2012-10-16   1st Qu.:30.6979  
-    ##  Median :2012-10-29   Median :37.3785  
-    ##  Mean   :2012-10-30   Mean   :37.3826  
-    ##  3rd Qu.:2012-11-16   3rd Qu.:46.1597  
-    ##  Max.   :2012-11-29   Max.   :73.5903
 
 The max values was in 2012-11-23 with 73.6 steps average.
 
