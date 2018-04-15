@@ -11,9 +11,10 @@ activity <- read_csv("C:/Users/Angel/Downloads/activity.csv")
 ```
 
 ```{r, echo=TRUE, eval=TRUE}
-hist(activity$steps,main = "Histogram of total number of steps taken each day",xlab = "Range of Steps")
-mean(activity$steps)
-median(activity$steps)
+steps <- aggregate(activity$steps, by = list(Category = activity$date), FUN=sum)
+hist(steps$x,main = "Histogram of total number of steps taken each day",xlab = "Range of Steps")
+mean(activity$steps, na.rm = TRUE)
+median(activity$steps, na.rm = TRUE)
 ```
 
 The histogram have some missing values. After range from 550 to 700 all values are zero. Also the meadian and the mean values are NA values because they have missing values.
